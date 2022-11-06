@@ -35,6 +35,17 @@ resource "google_project_iam_member" "tbd-editor-supervisors" {
   member  = each.value
 }
 
+resource "google_project_iam_member" "tbd-editor-students" {
+  for_each = toset([
+    "user:bluishalien99@gmail.com",
+    "user:adi999123@gmail.com",
+    "user:michal.kopyt1999@gmail.com"
+  ])
+  project = google_project.tbd_project.project_id
+  role    = "roles/editor"
+  member  = each.value
+}
+
 
 resource "google_project_iam_member" "tbd-editor-member" {
   project = google_project.tbd_project.project_id
