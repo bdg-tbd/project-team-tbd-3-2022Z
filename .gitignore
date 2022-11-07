@@ -9,6 +9,9 @@
 *.tfstate
 *.tfstate.*
 
+!gcp_project/*.tfstate
+!gcp_project/*.tfstate.*
+
 # Crash log files
 crash.log
 crash.*.log
