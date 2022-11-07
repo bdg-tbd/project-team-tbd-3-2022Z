@@ -15,7 +15,7 @@ resource "google_project" "tbd_project" {
 resource "google_project_service" "tbd-service" {
   project                    = google_project.tbd_project.project_id
   disable_dependent_services = true
-  for_each                   = toset(["cloudresourcemanager.googleapis.com", "iam.googleapis.com", "serviceusage.googleapis.com"])
+  for_each                   = toset(["cloudbilling.googleapis.com", "cloudresourcemanager.googleapis.com", "iam.googleapis.com", "serviceusage.googleapis.com"])
   service                    = each.value
 }
 
@@ -53,14 +53,20 @@ resource "google_project_iam_member" "tbd-editor-member" {
   member  = "serviceAccount:${google_service_account.tbd-terraform.email}"
 }
 
+
+resource "google_billing_account_iam_member" "tbd-terraform-sa-member" {
+  billing_account_id = var.billing_account
+  role               = "roles/billing.admin"
+  member             = "serviceAccount:${google_service_account.tbd-terraform.email}"
+}
+
 resource "google_project_iam_member" "tbd-terraform-sa-member" {
   depends_on = [google_service_account.tbd-terraform]
   project    = google_project.tbd_project.project_id
-  for_each   = toset(["roles/iam.securityAdmin", "roles/container.admin", "roles/storage.admin"])
+  for_each   = toset(["roles/iam.securityAdmin", "roles/serviceusage.serviceUsageAdmin", "roles/container.admin", "roles/storage.admin"])
   role       = each.value
   member     = "serviceAccount:${google_service_account.tbd-terraform.email}"
 }
-
 
 
 resource "google_storage_bucket" "tbd-state-bucket" {
@@ -74,4 +80,11 @@ resource "google_storage_bucket" "tbd-state-bucket" {
   }
   #checkov:skip=CKV_GCP_62: "Bucket should log access"
   #checkov:skip=CKV_GCP_29: "Ensure that Cloud Storage buckets have uniform bucket-level access enabled"
+}
+
+
+module "budget-monitoring" {
+  source          = "../modules/budget-monitoring"
+  billing_account = var.billing_account
+  project_name    = google_project.tbd_project.project_id
 }

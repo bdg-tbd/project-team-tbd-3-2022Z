@@ -27,3 +27,23 @@ Child Modules:
 ![](./doc/phase1a_figures/k8s-spark-operator-graph.svg)
 
 
+
+**Moduł monitorujący budżet**
+
+Wszelkie czynności związane z `google_billing_budget` muszą być dokonywane przy użyciu *service account*. W przypadku *end user credentials* dostaniemy `403` z informacją `"reason": "SERVICE_DISABLED"` dla `"service": "billingbudgets.googleapis.com"`, który w rzeczywistości jest włączony.
+
+`google_billing_budget` można skonfigurować podając wiele `threshold_rules` dla jednego resource'a, jednak nie jest możliwe użycie w takim wypadku `for_each`, a co za tym idzie, nie można poziomów dla alertów trzymać w liście.
+
+Postanowiliśmy wykorzystać `for_each`, a także umożliwić konfigurowanie poziomów dla alertów poprzez zmienną (z domyślnymi wartościami). Skutek jest jednak taki, że w konsoli widnieją 3 różne budżety zamiast jednego z kilkoma poziomami, jednak nie powinien być to raczej problem, ponieważ cała konfiguracja jest zarządzana i modyfikowana przez Terraforma.
+
+**Lista budżetów**
+![](./doc/phase1a_figures/budget-list.png)
+
+**Szczegóły budżetu**
+![](./doc/phase1a_figures/budget-details.png)
+
+TODO: Zaprezentuj w postaci zrzutów ekranu jak wygląda wykorzystanie budżetu po kilku dniach korzystania.
+
+
+
+**Klaster dataproc**
