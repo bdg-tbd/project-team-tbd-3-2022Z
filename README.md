@@ -47,3 +47,14 @@ TODO: Zaprezentuj w postaci zrzutów ekranu jak wygląda wykorzystanie budżetu 
 
 
 **Klaster dataproc**
+
+Projekt znajduje się w folderze `./dataproc`.
+
+W poleceniu jest mowa na zmianę o jobie sparkowym i pysparkowym, jednak przykładowy job pysparkowy jest typowym *hello worldem*, który praktycznie nic nie robi, a zatem w celu przetestowania polityki autoscalowania wybrany został przykładowy job sparkowy, który oblicza wartość liczby pi. Na zrzucie ekranu widoczne są 3 scale upy, ponieważ job sparkowy został uruchomiony 3 razy z kolejno argumentami: 100000, 200000 i 400000, które oznaczają liczbę równoległych tasków zwanych *slice* / *partition*.
+
+Można zauważyć, że gdy zaczynało brakować dostępnej pamięci, dodawany był kolejny (trzeci) node, a po zakończeniu obliczeń był on usuwany.
+
+**Działanie polityki autoscalowania**
+![](./doc/phase1a_figures/dataproc-asp.png)
+
+
