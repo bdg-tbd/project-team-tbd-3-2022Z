@@ -55,6 +55,7 @@ W poleceniu jest mowa na zmianę o jobie sparkowym i pysparkowym, jednak przykł
 Można zauważyć, że gdy zaczynało brakować dostępnej pamięci, dodawany był kolejny (trzeci) node, a po zakończeniu obliczeń był on usuwany.
 
 **Działanie polityki autoscalowania**
+
 ![](./doc/phase1a_figures/dataproc-asp.png)
 
 
