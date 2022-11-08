@@ -16,12 +16,17 @@ resource "google_billing_budget" "budget" {
   billing_account = data.google_billing_account.account.id
   display_name    = "TBD Billing Budget"
 
+  budget_filter {
+    credit_types_treatment = "EXCLUDE_ALL_CREDITS"
+  }
+
   amount {
     specified_amount {
       currency_code = "USD"
       units         = var.monthly_budget
     }
   }
+
   threshold_rules {
     threshold_percent = each.value
   }
