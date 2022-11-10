@@ -8,7 +8,7 @@ cd gcp_project
 terraform init
 cd ..
 
-terraform init
+terraform init -backend-config=env/dev/backend.tfvars
 
 cd dataproc
 terraform init
