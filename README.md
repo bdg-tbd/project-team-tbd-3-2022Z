@@ -50,7 +50,9 @@ Postanowiliśmy wykorzystać `for_each`, a także umożliwić konfigurowanie poz
 
 ![](./doc/phase1a_figures/budget-details.png)
 
-TODO: Zaprezentuj w postaci zrzutów ekranu jak wygląda wykorzystanie budżetu po kilku dniach korzystania.
+**Wykorzystanie budżetu na koniec etapu 1a**
+
+![](./doc/phase1a_figures/budget-usage.png)
 
 
 

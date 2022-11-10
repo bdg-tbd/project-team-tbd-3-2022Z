@@ -7,10 +7,12 @@ variable "group_id" {
   type        = number
   description = "TBD project group id"
 }
+
 variable "billing_account" {
   type        = string
   description = "Billing account a project is attached to"
 }
+
 variable "region" {
   type        = string
   description = "GCP region"

@@ -2,20 +2,20 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/hashicorp/google" {
-  version = "4.42.1"
+  version     = "4.8.0"
+  constraints = "~> 4.8.0"
   hashes = [
-    "h1:ycmwFXvw8H/6WpQOK6Gw1pssy0PzXkSZmPE+uhpYGZA=",
-    "zh:0a4a244b2b65c4e403ae3825d610949cf98c2593a6f6894c36ccd21f5dea7b1e",
-    "zh:0fc5dfaa24d1c790fd17eafbe768d3f8a15b450d80cf3d7ab18f3f81d521adb6",
-    "zh:37fe844eac11ee61da141fdc8502ecec9f722a828754dff7795499de5981de22",
-    "zh:3cacce3c045b19e9ebe985d3de939f0a281cdd8b20cce0a212b48593c172a16a",
-    "zh:429048016c8227e63bb325e6fd78b8f9abc72cf4257b7cd7cba6d950a8601f69",
-    "zh:5a183bace4306b2c3e678dcaa37fa65dd2b5cbcbccf4a859611afac827fd2524",
-    "zh:5c2b99af20eb931321b2b95eff9dbc56ba87744d1047120beb2a62a722baa98f",
-    "zh:87d39b32f6448adb4e17758794c25ecebd19f1889a1634d0b57391a24908a4ef",
-    "zh:8c787a08ff05c67e4182b248943143bcaee8568e4d88562ff7982f711a6664cf",
-    "zh:9dcdda7993d7bf21e660cb521f61a72f3ec5bf5c52f7f25502e4c7648b1f885e",
-    "zh:b122b5a9a521ee96636e517c41c4ead0bf0446df59657b5a136c8a9081449a96",
-    "zh:f569b65999264a9416862bca5cd2a6177d94ccb0424f3a4ef424428912b9cb3c",
+    "h1:2EwEiinufTyL/mQ4eQHu+UOwKaHUQfhhU//aA+CopwQ=",
+    "zh:08d1fbdaee6f9d615e09ab6244d5f8f1b76fd079fc4193822a9f5ac4344b3738",
+    "zh:27afa2e26921ca5b96e804b781792296e9a9d4ac533d6f87c3855ae68e28ef80",
+    "zh:2d1fe33d3c6daa85a9ba6608b99d9710c7fcd61199d249e353e82d5bf1a18280",
+    "zh:31b2c41dbe458d8b75068069bb05864027bd1b4a3f4c8e8b7cd7b9d1fe47be7b",
+    "zh:4001c5237a4fb383014b685077c12a0b9cdbac28dce0c707a9a4622d62ef06c9",
+    "zh:82c9ef3f72fa6a8fba163cff94b0f7fd0572724e991af5c7f389feaaf83298d8",
+    "zh:9524a6dc9d8b2cbcef53ca2c04e121899bb1947ff8d4f9569c3b01b1cb9f736a",
+    "zh:a33dcd5d8efef4dafaa331918c79b793be036420fc56c40bb3fb313fdb56db0d",
+    "zh:aa36241871cb5376c7ba8cb8b2ddbfc488c4231e5c0d10b2f421ffaa14c0b462",
+    "zh:cd2c1ffbab0c6e154ed2472edc2788bc2cb9db93848325e389a7157ebbb540de",
+    "zh:f350242dabb33035e2b49cd3e925c88c6bf4b73becfaff298d503e4c64e46271",
   ]
 }

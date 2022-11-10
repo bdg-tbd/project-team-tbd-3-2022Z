@@ -20,6 +20,8 @@ resource "google_dataproc_cluster" "tbd-cluster" {
 }
 
 resource "google_dataproc_autoscaling_policy" "tbd-asp" {
+  depends_on = [google_project_service.dataproc-service]
+
   policy_id = "tbd-asp"
   project   = var.project_name
   location  = var.region
@@ -50,7 +52,7 @@ resource "google_dataproc_job" "tbd-spark-job" {
   spark_config {
     main_class    = "org.apache.spark.examples.SparkPi"
     jar_file_uris = ["file:///usr/lib/spark/examples/jars/spark-examples.jar"]
-    args          = ["400000"]
+    args          = ["100000"]
 
     properties = {
       "spark.logConf" = "true"
