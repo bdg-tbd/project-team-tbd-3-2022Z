@@ -1,0 +1,131 @@
+name: Pull request workflow
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.1.7
+    - name: Setup GCP Service Account
+      uses: google-github-actions/setup-gcloud@v0.6.0
+      with:
+        version: 'latest'
+        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+
+    - name: Terraform Init
+      id: init
+      run: terraform init -backend-config=env/${GITHUB_BASE_REF}/backend.tfvars -reconfigure
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -var-file env/${GITHUB_BASE_REF}/project.tfvars -compact-warnings -no-color
+      env:
+        TF_VAR_billing_account: ${{ secrets.TF_VAR_BILLING_ACCOUNT }}
+        TF_VAR_group_id: ${{ secrets.TF_VAR_GROUP_ID }}
+        TF_VAR_tbd_semester: ${{ secrets.TF_VAR_TBD_SEMESTER }}
+
+    - uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      with:
+        github-token: ${{ secrets.GH_TOKEN }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+          <details><summary>Validation Output</summary>
+          \`\`\`\n
+          ${{ steps.validate.outputs.stdout }}
+          \`\`\`
+          </details>
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+          <details><summary>Show Plan</summary>
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+          </details>
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+    - name: Terraform plan
+      run: terraform plan -var-file env/${GITHUB_BASE_REF}/project.tfvars -out tfplan.binary
+      env:
+        TF_VAR_billing_account: ${{ secrets.TF_VAR_BILLING_ACCOUNT }}
+        TF_VAR_group_id: ${{ secrets.TF_VAR_GROUP_ID }}
+        TF_VAR_tbd_semester: ${{ secrets.TF_VAR_TBD_SEMESTER }}
+
+
+    - uses: terraform-linters/setup-tflint@v1
+      name: Setup TFLint
+      with:
+        tflint_version: v0.35.0
+        github_token: ${{ secrets.GH_TOKEN }}
+
+    - name: Init TFLint
+      run: tflint --init
+
+    - name: Run TFLint
+      run:  tflint --var-file=env/${GITHUB_BASE_REF}/project.tfvars --module -f compact
+
+    - name: Terraform show
+      run: terraform show -json tfplan.binary > plan.json
+
+    - name: Setup Infracost
+      uses: infracost/actions/setup@v1
+      with:
+        api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+      # Generate Infracost JSON output, the following docs might be useful:
+      # Multi-project/workspaces: https://www.infracost.io/docs/features/config_file
+      # Combine Infracost JSON files: https://www.infracost.io/docs/features/cli_commands/#combined-output-formats
+    - name: Generate Infracost JSON
+      run: infracost breakdown --usage-file .infracost-usage.yml --path plan.json --format json --out-file /tmp/infracost.json
+        # Env vars can be set using the usual GitHub Actions syntax
+        # See the list of supported Infracost env vars here: https://www.infracost.io/docs/integrations/environment_variables/
+        # env:
+        #   MY_ENV: ${{ secrets.MY_ENV }}
+
+      # See https://www.infracost.io/docs/features/cli_commands/#comment-on-pull-requests for other options.
+    - name: Post Infracost comment
+      run: |
+        # Posts a comment to the PR using the 'update' behavior.
+        # This creates a single comment and updates it. The "quietest" option.
+        # The other valid behaviors are:
+        #   delete-and-new - Delete previous comments and create a new one.
+        #   hide-and-new - Minimize previous comments and create a new one.
+        #   new - Create a new cost estimate comment on every push.
+        infracost comment github --path /tmp/infracost.json \
+                                 --repo $GITHUB_REPOSITORY \
+                                 --github-token ${{github.token}} \
+                                 --pull-request ${{github.event.pull_request.number}} \
+                                 --behavior update
+    - name: Run Checkov action
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: .
+        quiet: true # optional: display only failed checks
+        soft_fail: false # optional: do not return an error code if there are failed checks
+        framework: terraform # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
+        output_format: sarif # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
+        download_external_modules: false # optional: download external terraform modules from public git repositories and terraform registry
