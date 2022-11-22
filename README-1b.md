@@ -27,6 +27,11 @@ Trzeba było też usunąć `github-token: ${{ secrets.GH_TOKEN }}` z kroku `uses
 
 **Napisz, co trzeba było wykonać**
 
+Trzeba było z pliku `variables.tf` usunąć następujące (nieużywane) zmienne:
+* `zone`
+* `group_id`
+* `billing_account`
+* `environment`
 
 
 
