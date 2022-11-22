@@ -23,4 +23,10 @@ Trzeba było też usunąć `github-token: ${{ secrets.GH_TOKEN }}` z kroku `uses
 > 
 > By default, github-script will use the token provided to your workflow.
 
+### Lintint TF
+
+**Napisz, co trzeba było wykonać**
+
+
+
 
