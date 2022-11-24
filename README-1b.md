@@ -79,4 +79,14 @@ Niestety w porównaniu z danymi na stronie https://cloud.google.com/storage/pric
 
 ![img.png](doc/phase1b_figures/infra-cost.png)
 
+### Checkov
+
+Po ustawieniu `skip-check`, Checkov wyrzucał dwa błędy `CKV_GCP_78: "Ensure Cloud storage has versioning enabled"` dla `google_storage_bucket.tbd-state-bucket` oraz `google_storage_bucket.tbd-staging-bucket`. Aby je naprawić, należało włączyć wersjonowanie w ww. bucketach poprzez dodanie następującego kodu:
+
+```tf
+versioning {
+  enabled = true
+}
+```
+
 
