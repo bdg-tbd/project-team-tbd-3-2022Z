@@ -7,3 +7,9 @@ variable "region" {
   type        = string
   description = "GCP region"
 }
+
+variable "test" {
+  type        = string
+  description = "test"
+  default     = "value"
+}
