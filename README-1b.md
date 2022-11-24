@@ -33,5 +33,15 @@ Trzeba było z pliku `variables.tf` usunąć następujące (nieużywane) zmienne
 * `billing_account`
 * `environment`
 
+### Infracost
+
+Wyliczony koszt: $106
+
+Najdroższy składnik:
+`module.gke.google_container_cluster.primary` > `Cluster management fee`: $73.00
+
+Najtańszy składnik:
+`google_storage_bucket.tbd-staging-bucket`, ponieważ *Monthly cost depends on usage*, a zatem jego koszt nie jest uwzględniany w podsumowaniu, ponieważ zależy on od zużycia (ilość zapisanych / przesłanych danych, liczba operacji).
+
 
 
