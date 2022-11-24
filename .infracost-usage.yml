@@ -5,3 +5,9 @@ resource_usage:
     monthly_class_a_operations: 40000 # Monthly number of class A operations (object adds, bucket/object list).
     monthly_class_b_operations: 20000 # Monthly number of class B operations (object gets, retrieve bucket/object metadata).
     monthly_data_retrieval_gb: 1000
+    monthly_egress_data_transfer_gb:  # Monthly data transfer from Cloud Storage to the following, in GB:
+      same_continent: 1000 # Same continent.
+      worldwide: 100       # Worldwide excluding Asia, Australia.
+      asia: 0              # Asia excluding China, but including Hong Kong.
+      china: 0             # China excluding Hong Kong.
+      australia: 0         # Australia.

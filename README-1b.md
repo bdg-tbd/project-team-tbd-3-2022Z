@@ -43,5 +43,8 @@ Najdroższy składnik:
 Najtańszy składnik:
 `google_storage_bucket.tbd-staging-bucket`, ponieważ *Monthly cost depends on usage*, a zatem jego koszt nie jest uwzględniany w podsumowaniu, ponieważ zależy on od zużycia (ilość zapisanych / przesłanych danych, liczba operacji).
 
+**.infracost-usage.yml**
+
+Całkowity koszt wzrósł z $106 do $109, ponieważ w pliku `.infracost-usage.yml` zostały podane szacunkowe (częściowe) dane dla zużycia `google_storage_bucket.tbd-staging-bucket`.
 
 
