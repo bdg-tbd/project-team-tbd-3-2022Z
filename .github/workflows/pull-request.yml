@@ -36,7 +36,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -var-file env/${GITHUB_BASE_REF}/project.tfvars -compact-warnings -no-color
+      run: terraform plan -var-file env/${GITHUB_BASE_REF}/project.tfvars -compact-warnings -no-color -out tfplan.binary
       env:
         TF_VAR_billing_account: ${{ secrets.TF_VAR_BILLING_ACCOUNT }}
         TF_VAR_group_id: ${{ secrets.TF_VAR_GROUP_ID }}
@@ -84,13 +84,6 @@ jobs:
           
           *Comment id: fc_tf_validation_4831mt77*
         edit-mode: replace
-    
-    - name: Terraform plan
-      run: terraform plan -var-file env/${GITHUB_BASE_REF}/project.tfvars -out tfplan.binary
-      env:
-        TF_VAR_billing_account: ${{ secrets.TF_VAR_BILLING_ACCOUNT }}
-        TF_VAR_group_id: ${{ secrets.TF_VAR_GROUP_ID }}
-        TF_VAR_tbd_semester: ${{ secrets.TF_VAR_TBD_SEMESTER }}
 
     - uses: terraform-linters/setup-tflint@v1
       name: Setup TFLint
