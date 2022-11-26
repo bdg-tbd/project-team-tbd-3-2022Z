@@ -5,11 +5,11 @@ on:
     types:
       - closed
     branches:
-      - master
+      - test_m
 
 jobs:
   release:
-    if: github.head_ref == 'dev' && github.event.pull_request.merged == true
+    if: github.head_ref == 'test_d' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
