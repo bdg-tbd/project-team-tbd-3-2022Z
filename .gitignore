@@ -33,3 +33,5 @@ gcp_project/.terraform
 gcp_project/*.tfstate*
 
 data/*.csv
+
+.secrets

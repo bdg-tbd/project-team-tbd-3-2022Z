@@ -1,0 +1,12 @@
+directory:
+  - .
+quiet: true # optional: display only failed checks
+soft-fail: false # optional: do not return an error code if there are failed checks
+framework: # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
+  - terraform
+output: sarif # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
+download-external-modules: false # optional: download external terraform modules from public git repositories and terraform registry
+skip-check:
+  - CKV_GCP_27
+  - CKV_GCP_49
+  - CKV2_GCP_5
