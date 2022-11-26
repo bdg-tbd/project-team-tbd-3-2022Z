@@ -19,9 +19,14 @@ jobs:
 
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@v1
+      id: tag_action
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
+
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ steps.tag_action.outputs.new_tag }}
 
     - name: Release
       uses: softprops/action-gh-release@v1
