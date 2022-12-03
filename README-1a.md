@@ -2,6 +2,16 @@
 
 ## Etap 1a
 
+### README -- GKE i Dataproc
+
+**Udało się poprawnie odpalić joby na GKE i Dataproc opisane w README**
+
+![](./doc/phase1a_figures/readme-job-output.png)
+
+![](./doc/phase1a_figures/readme-job-storage.png)
+
+
+
 ### Sposoby odwoływania się do modułów Terraform wykorzystane w projekcie
 
 Root Module -- główny moduł (projekt) wykorzystujący child modules.
