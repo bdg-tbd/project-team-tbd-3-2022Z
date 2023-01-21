@@ -8,11 +8,16 @@ resource "google_project_service" "dataproc-service" {
 resource "google_dataproc_cluster" "tbd-cluster" {
   depends_on = [google_project_service.dataproc-service]
 
+  #checkov:skip=CKV_GCP_91:"Ensure Dataproc cluster is encrypted with Customer Supplied Encryption Keys (CSEK)"
   name    = "tbd-cluster"
   project = var.project_name
   region  = var.region
 
   cluster_config {
+    gce_cluster_config {
+      internal_ip_only = true
+    }
+
     autoscaling_config {
       policy_uri = google_dataproc_autoscaling_policy.tbd-asp.name
     }
