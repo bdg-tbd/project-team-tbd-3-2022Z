@@ -39,7 +39,7 @@ resource "google_container_cluster" "primary" {
   #checkov:skip=CKV_GCP_10:"Ensure 'Automatic node upgrade' is enabled for Kubernetes Clusters"
   project               = var.project_name
   name                  = "${var.project_name}-cluster"
-  location              = var.region
+  location              = var.zone
   enable_shielded_nodes = true
 
   private_cluster_config {
@@ -66,18 +66,19 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 
   project    = var.project_name
   name       = "${var.project_name}-lab-pool"
-  location   = var.region
+  location   = var.zone
   cluster    = google_container_cluster.primary.name
-  node_count = 1
+  node_count = 6
 
 
   autoscaling {
-    min_node_count = 1
+    min_node_count = 6
     max_node_count = var.max_node_count
   }
   node_config {
     preemptible  = var.preemptible
     machine_type = var.machine_type
+    disk_size_gb = 50
 
 
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.

@@ -66,6 +66,7 @@ module "gke" {
   source          = "./modules/gke"
   project_name    = var.project_name
   region          = var.region
+  zone            = var.zone
   service_account = google_service_account.tbd-sa.email
 }
 
