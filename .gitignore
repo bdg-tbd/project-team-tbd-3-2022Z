@@ -40,3 +40,5 @@ tbd-notebooks/cores_testing/.ipynb_checkpoints
 tbd-notebooks/cores_testing/h2ologs
 tbd-notebooks/.ipynb_checkpoints
 tbd-notebooks/h2ologs
+
+.secrets
