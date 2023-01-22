@@ -24,7 +24,7 @@
     type: Python
     pythonVersion: "3"
     mode: cluster
-    image: "docker.io/biodatageeks/spark-py:pysequila-0.3.3-gke"
+    image: "docker.io/biodatageeks/spark-py:pysequila-0.3.3-gke-272379a"
     imagePullPolicy: Always
     mainApplicationFile: gs://${staging_bucket}/src/pyspark_k8s_job.py
     sparkVersion: "3.1.1"
@@ -32,7 +32,7 @@
       spark.kubernetes.executor.deleteOnTermination: "true"
     restartPolicy:
       type: OnFailure
-      onFailureRetries: 3
+      onFailureRetries: 0
       onFailureRetryInterval: 10
       onSubmissionFailureRetries: 5
       onSubmissionFailureRetryInterval: 20
@@ -44,9 +44,10 @@
         version: 3.1.1
       serviceAccount: spark
     executor:
-      cores: 1
+      coreRequest: "300m"
+      coreLimit: "1000m"
       instances: 1
-      memory: "1024m"
+      memory: "2000m"
       labels:
         version: 3.1.1
       volumeMounts:
