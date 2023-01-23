@@ -27,16 +27,16 @@ resource "google_dataproc_workflow_template" "dataproc_workflow_template" {
         staging_bucket = var.staging_bucket
         master_config {
           num_instances = 1
-          machine_type  = "n1-standard-2"
+          machine_type  = "e2-standard-2"
           disk_config {
-            boot_disk_size_gb = 30
+            boot_disk_size_gb = 50
           }
         }
         worker_config {
-          num_instances = 1
-          machine_type  = "n1-standard-2"
+          num_instances = 6
+          machine_type  = "e2-standard-2"
           disk_config {
-            boot_disk_size_gb = 30
+            boot_disk_size_gb = 50
           }
         }
         software_config {
@@ -61,9 +61,11 @@ resource "google_dataproc_workflow_template" "dataproc_workflow_template" {
         "spark.jars.excludes" : "org.scala-lang:scala-reflect,org.apache.spark:spark-tags_2.12,org.scalactic:scalactic_2.12,org.scalatest:scalatest_2.12",
         "spark.yarn.user.classpath.first" : "true",
         "spark.dynamicAllocation.enabled" : "false"
-        "spark.sql.catalogImplementation" : "in-memory"
+        "spark.sql.catalogImplementation" : "in-memory",
+        "spark.executor.cores" : 1
+        "spark.executor.instances" : 2
+        "spark.executor.memory" : "2000m"
       }
     }
-
   }
 }

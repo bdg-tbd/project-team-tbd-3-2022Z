@@ -46,7 +46,7 @@
     executor:
       coreRequest: "300m"
       coreLimit: "1000m"
-      instances: 1
+      instances: 2
       memory: "2000m"
       labels:
         version: 3.1.1
