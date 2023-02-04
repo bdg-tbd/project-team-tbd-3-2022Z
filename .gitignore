@@ -41,4 +41,8 @@ tbd-notebooks/cores_testing/h2ologs
 tbd-notebooks/.ipynb_checkpoints
 tbd-notebooks/h2ologs
 
+output/google_storage_output/*
+
+!/**/.gitkeep
+
 .secrets

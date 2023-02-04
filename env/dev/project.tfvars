@@ -1,4 +1,4 @@
 environment  = "dev"
-region       = "europe-central2"
-zone         = "europe-central2-a"
+region       = "europe-west3"
+zone         = "europe-west3-b"
 project_name = "tbd-2022z-3"

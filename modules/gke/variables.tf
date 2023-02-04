@@ -8,6 +8,11 @@ variable "region" {
   description = "GCP region"
 }
 
+variable "zone" {
+  type        = string
+  description = "GCP region"
+}
+
 variable "machine_type" {
   type        = string
   description = "GCP machine type"
@@ -17,7 +22,7 @@ variable "machine_type" {
 variable "max_node_count" {
   type        = string
   description = "Maximum number of GKE nodes"
-  default     = 2
+  default     = 6
 }
 
 variable "preemptible" {
